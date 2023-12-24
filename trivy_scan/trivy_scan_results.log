@@ -1,0 +1,57 @@
+{
+  "SchemaVersion": 2,
+  "ArtifactName": "khalilsellamii/projet-devops:v0.test",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "ImageID": "sha256:30b7b7b670421240dbdf316f85fc3197c9b47c9cb53fc881173732f5cca519f2",
+    "DiffIDs": [
+      "sha256:ffba65df5e076dd30569d3552753c35b24462ca066f00723881bfbb94ef842d9"
+    ],
+    "RepoTags": [
+      "khalilsellamii/projet-devops:v0.test"
+    ],
+    "RepoDigests": [
+      "khalilsellamii/projet-devops@sha256:7aaba35a2ca1de0969cbf1050d163038b1112e01b0cfc096f89ad27a4a1cc0b2"
+    ],
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2023-12-01T00:16:48.46318206+01:00",
+      "history": [
+        {
+          "created": "2023-11-30T23:16:48Z",
+          "created_by": "WORKDIR /",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2023-11-30T23:16:48Z",
+          "created_by": "COPY /go_script . # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2023-11-30T23:16:48Z",
+          "created_by": "CMD [\"/go_script\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:ffba65df5e076dd30569d3552753c35b24462ca066f00723881bfbb94ef842d9"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "/go_script"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "WorkingDir": "/",
+        "ArgsEscaped": true
+      }
+    }
+  }
+}

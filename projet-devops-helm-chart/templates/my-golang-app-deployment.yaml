@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.GolangDeployment.name }}
+  name: {{ .Values.GolangDeployment.name }}
+spec:
+  replicas: {{ .Values.GolangDeployment.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.GolangDeployment.name }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.GolangDeployment.name }}
+    spec:
+      containers:
+      - image: {{ .Values.GolangDeployment.image.repository }}:{{ .Values.GolangDeployment.image.tag }}
+        name: {{ .Values.GolangDeployment.name }}
+        ports:
+        - containerPort: {{ .Values.GolangDeployment.image.port }}
+        env:
+        {{- range .Values.wordpressDeployment.env }}
+          - name: {{ .name }}
+            value: {{ .value }}
+        {{- end }}
+

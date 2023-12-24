@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/issuer: selfsigned-issuer
+spec:
+  tls:
+  - hosts:
+    - khalil-projet-devops.20.19.192.184.nip.io
+    secretName: my-self-signed-certificate
+  ingressClassName: nginx
+  rules:
+  - host: khalil-projet-devops.20.19.192.184.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-golang-app
+            port:
+              number: 80

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-golang-app
+  name: my-golang-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-golang-app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: my-golang-app
+    spec:
+      containers:
+      - image: khalilsellamii/projet-devops:v0.test
+        name: projet-devops
+        ports:
+        - containerPort: 4444
+        env:
+        - name: MYSQL_DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-configmap
+              key: MYSQL_DB_HOST
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-configmap
+              key: MYSQL_DB_NAME
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-pass-secret
+              key: MYSQL_ROOT_PASSWORD            
+

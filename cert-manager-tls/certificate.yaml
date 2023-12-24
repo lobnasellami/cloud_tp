@@ -1,0 +1,10 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: my-self-signed-certificate
+spec:
+  secretName: my-self-signed-certificate
+  dnsNames:
+    - khalil-projet-devops.20.19.192.184.nip.io
+  issuerRef:
+    name: selfsigned-issuer

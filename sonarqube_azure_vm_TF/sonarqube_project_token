@@ -1,0 +1,11 @@
+'*' PROJET_TOKEN:
+    sqp_c8c0f860890b074339b03a624b4aa157b0e19211
+
+'*' SCANNER_COMMAND:
+    sonar-scanner \
+  -Dsonar.projectKey=projet-devops \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://localhost:9999 \
+  -Dsonar.token=sqp_c8c0f860890b074339b03a624b4aa157b0e19211
+
+

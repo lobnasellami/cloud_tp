@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata: 
+  name: main-rules-alert-config
+  namespace: monitoring
+spec:
+  route:
+    receiver: 'email'
+    routes:
+    - matchers:
+      - name: alertname
+        value: HostHighCpuLoad
+  receivers:
+  - name: 'email'
+    emailConfigs:
+    - to: 'testprojetdevops@gmail.com' 
+      from: 'testprojetdevops@gmail.com' 
+      smarthost: 'smtp.gmail.com:587'
+      authUsername: 'testprojetdevops@gmail.com' 
+      authIdentity: 'testprojetdevops@gmail.com' 
+      authPassword:  
+       name: email-auth
+       key: password

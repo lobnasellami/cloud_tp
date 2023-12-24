@@ -1,0 +1,65 @@
+GolangDeployment:
+  replicaCount: 1
+  name: my-golang-app
+  image: 
+    repository: khalilsellamii/projet-devops
+    tag: :v0.test
+    port: 4444
+  service:
+    name: my-golang-app
+    protocol: TCP
+    type: ClusterIP
+    port: 80
+    targetPort: 4444
+  env:
+    - name: MYSQL_DB_HOST
+      valueFrom:
+       configMapKeyRef:
+         name: db-configmap
+         key: MYSQL_DB_HOST
+    - name: DB_NAME
+      valueFrom:
+        configMapKeyRef:
+          name: db-configmap
+          key: MYSQL_DB_NAME    
+    - name: DB_PASS
+      valueFrom:
+        secretKeyRef:
+          name: db-pass-secret
+          key: MYSQL_ROOT_PASSWORD  
+     
+
+
+mysqlStatefulSet:
+  replicaCount: 1
+  name: mysql
+  image:
+    repository: mysql
+    tag: latest
+    port: 3306
+    imagePullPolicy: Always
+  service:
+    name: mysql-svc
+    protocol: TCP
+    type: ClusterIP
+    port: 3306
+    targetPort: 3306
+  env: 
+    name: MYSQL_DATABASE
+    value : project
+  persistence:
+    enabled: true
+    name: mysql-storage  
+    mountPath: /var/lib/mysql
+    storageClassName: "default"
+    accessModes: [ "ReadWriteOnce" ]
+    storageSize: 2Gi
+
+db-configMap: 
+  name: db-configmap
+  MYSQL_DB_HOST: mysql-svc
+  MYSQL_DB_NAME: project
+
+
+db_secret:
+  name: wp-db-secrets

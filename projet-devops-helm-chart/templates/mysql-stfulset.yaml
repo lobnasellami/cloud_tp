@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.mysqlStatefulSet.name }}
+spec:
+  serviceName: {{ .Values.mysqlStatefulSet.service.name }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.mysqlStatefulSet.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mysqlStatefulSet.name }}
+    spec:
+      containers:
+      - name: {{ .Values.mysqlStatefulSet.name }}
+        image: {{ .Values.mysqlStatefulSet.image.repository }}:{{ .Values.mysqlStatefulSet.image.tag }}
+        imagePullPolicy: {{ .Values.mysqlStatefulSet.image.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.mysqlStatefulSet.image.port }}
+        env:
+        - name: {{ .Values.mysqlStatefulSet.env.name }}
+          value: {{ .Values.mysqlStatefulSet.env.value }}
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: wp-db-secrets
+              key: MYSQL_ROOT_PASSWORD          
+        volumeMounts:
+        - name: {{ .Values.mysqlStatefulSet.persistence.name }}
+          mountPath: {{ .Values.mysqlStatefulSet.persistence.mountPath }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.mysqlStatefulSet.persistence.name }}
+    spec:
+      accessModes: {{ .Values.mysqlStatefulSet.persistence.accessModes }}
+      storageClassName: {{ .Values.mysqlStatefulSet.persistence.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.mysqlStatefulSet.persistence.storageSize}}
+
